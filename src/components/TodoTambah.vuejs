@@ -1,0 +1,58 @@
+<script>
+  export default{
+    props: {
+      method: Function
+    },
+    data(){
+      return {
+        taskData: "",
+        val: "val"
+      }
+    },
+    methods: {
+      handleClick(){
+        const getTodo = localStorage.getItem("todos")
+        const todo = {
+          id: new Date().getTime(),
+          task: this.taskData,
+          isDone: false
+        }
+        if(!getTodo){
+          localStorage.setItem("todos", JSON.stringify([todo]))
+        } else{
+          let newTodo = JSON.parse(getTodo)
+          newTodo.push(todo)
+          localStorage.setItem("todos", JSON.stringify(newTodo))
+          this.taskData = ""
+          this.method()
+        }
+      }
+    },
+  }  
+</script>
+
+<template>
+  <div class="add-container">
+    <input type="text" v-model="taskData" class="input-text" placeholder="tambah..." />
+    <button @click="handleClick">+</button>
+  </div>
+</template>
+
+<style>
+  .add-container{
+    display: flex;
+    align-items: center
+  }
+  .add-container input{
+    border-radius: 20px;
+  }
+  .add-container button{
+    padding: 7px 12px;
+    border-radius: 50%;
+    position: absolute;
+    right: 25px;
+  }  
+  .add-container button:hover{
+    background-color: #0b9869;
+  }
+</style>

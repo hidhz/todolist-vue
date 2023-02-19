@@ -1,0 +1,80 @@
+  :root{
+    --hijau: #10b981;
+    --abu-abu: #64748b;
+  }
+    header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  h1{
+    color: var(--abu-abu);
+    font-family: Arial;
+    font-size: 25px;
+  }
+  button{
+    margin: 0 5px;
+    border: 0;
+    color: white;
+    background-color: var(--hijau);
+    border-radius: 5px;
+    padding: 5px 8px;
+  }
+  button span{
+    background-color: white;
+    color: var(--hijau);
+    border-radius: 50%;
+    padding: 2px;
+  }
+  .add-container{
+    display: flex;
+    align-items: center
+  }
+  .add-container input{
+    border-radius: 20px;
+  }
+  .add-container button{
+    padding: 7px 12px;
+    border-radius: 50px;
+    position: absolute;
+    right: 21px;
+  }  
+  .add-container button:hover{
+    background-color: #0b9869;
+  }
+  .subtitle{
+    display: block;
+    padding-top: 30px;
+    font-family: Arial;
+    color: var(--abu-abu);
+  }
+  .item-container{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .item-container button {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+  }
+  .item-item{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  .input-text{
+    width: 100%;
+    height: 30px;
+    font-size: 16px;
+    color: var(--abu-abu);
+    border: 1.5px solid var(--abu-abu);
+    border-radius: 7px;
+  }
+  .input-checkbox{
+    width: 10%;
+    height: 26px;
+    position: absolute;
+    right: 3.3rem;
+  }
