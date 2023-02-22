@@ -3,11 +3,11 @@
 //  import TodoItem from "./components/TodoItem.vue"
 //  import TodoTambah from "./components/TodoTambah.vue"
   import Todo from "./components/Todo.vue"
-  import './todo.css'
 </script>
 
 <template>
   <div class="container">
+    
     <Todo />
   </div>
 </template>

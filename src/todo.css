@@ -2,7 +2,7 @@
     --hijau: #10b981;
     --abu-abu: #64748b;
   }
-    header{
+  header{
     display: flex;
     align-items: center;
     justify-content: space-between;

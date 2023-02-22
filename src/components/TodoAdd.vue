@@ -1,12 +1,11 @@
 <script>
-  export default{
+  export default {
     props: {
-      method: Function
+      method: Function,
     },
     data(){
       return {
-        taskData: "",
-        val: "val"
+        taskData: ""
       }
     },
     methods: {
@@ -17,42 +16,23 @@
           task: this.taskData,
           isDone: false
         }
+        if(!todo.task) return false
         if(!getTodo){
           localStorage.setItem("todos", JSON.stringify([todo]))
         } else{
-          let newTodo = JSON.parse(getTodo)
-          newTodo.push(todo)
+          const newTodo = JSON.parse(getTodo)
+          newTodo.unshift(todo) 
           localStorage.setItem("todos", JSON.stringify(newTodo))
-          this.taskData = ""
-          this.method()
+          this.taskData = ""; this.method()
         }
       }
     },
-  }  
+  }
 </script>
 
 <template>
   <div class="add-container">
     <input type="text" v-model="taskData" class="input-text" placeholder="tambah..." />
-    <button @click="handleClick">+</button>
+    <button @click="handleClick">tambah</button>
   </div>
 </template>
-
-<style>
-  .add-container{
-    display: flex;
-    align-items: center
-  }
-  .add-container input{
-    border-radius: 20px;
-  }
-  .add-container button{
-    padding: 7px 12px;
-    border-radius: 50%;
-    position: absolute;
-    right: 25px;
-  }  
-  .add-container button:hover{
-    background-color: #0b9869;
-  }
-</style>

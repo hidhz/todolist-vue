@@ -1,35 +1,49 @@
 <script>
-  import TodoHeader from "./TodoHeader.vue"
-  import TodoAdd from "./TodoAdd.vue"
+  import './../todo.css'
   export default{
-    components: {
-      TodoHeader, TodoAdd
+    props: {
+      method: Function
     },
     data(){
       return {
         taskData: "",
         isDone: false,
-        localStorage: JSON.parse(localStorage.getItem("todos")),
-        data: localStorage ? localStorage : "",
-        jumlahselesai: 0,
-        jumlahTask: 0
+        data: JSON.parse(localStorage.getItem("todos")) ? JSON.parse(localStorage.getItem("todos")) : "",
+        jumlahselesai: 0
       }
     },
     methods: {
-      getTodo(){
+      getNew(){
         this.data = JSON.parse(localStorage.getItem("todos")) ? JSON.parse(localStorage.getItem("todos")) : ""
         const b = this.data.filter(d => {
           return d.isDone === true
         })
         this.jumlahselesai = b.length < 10 ? `0${b.length}` : b.length
-        this.jumlahTask = this.data.length < 10 ? 0 + "" + this.data.length : this.data.length
+      },
+      handleClick(){
+        const getTodo = localStorage.getItem("todos")
+        const todo = {
+          id: new Date().getTime(),
+          task: this.taskData,
+          isDone: false
+        }
+        if(!todo.task) return false
+        if(!getTodo){
+          localStorage.setItem("todos", JSON.stringify([todo]))
+        } else{
+          let newTodo = JSON.parse(getTodo)
+          newTodo.push(todo)
+          localStorage.setItem("todos", JSON.stringify(newTodo))
+          this.taskData = ""
+          this.getNew()
+        }
       },
       removeTodo(id){
         const newTodo = this.data.filter((data) => {
           return data.id !== id
         })
         localStorage.setItem("todos", JSON.stringify(newTodo))
-        this.getTodo()
+        this.getNew()
       },
       doneTodo(data){
         const newTodo = this.data.map((item) => {
@@ -39,32 +53,41 @@
           return item
         })
         localStorage.setItem("todos", JSON.stringify(newTodo))
-        this.getTodo()
+        this.getNew()
       },
-      todoEdit(event){
+      taskEdit(data){
         const newTodo = this.data.map((item) => {
-          if(item.id == event.id) {
-            item.task = event.data
-          } 
+          if(item.id == data.id) {
+            item.task = data.value
+          }
           return item
         })
         localStorage.setItem("todos", JSON.stringify(newTodo))
-        this.getTodo()
+        this.getNew()
       },
     },
     mounted(){
-      this.getTodo()
+      this.getNew()
     }
   }  
 </script>
 
 <template>
-  <TodoHeader :semuaTask="jumlahTask" :taskSelesai="jumlahselesai" />
-  <TodoAdd :method="getTodo"/>
+  <header>
+    <h1>Todo App</h1>
+    <div>
+      <button>Semua <span>{{data.length < 10 ? 0 + ""+data.length : data.length}}</span></button>
+      <button>Selesai <span>{{jumlahselesai}}</span></button>
+    </div>
+  </header>
+  <div class="add-container">
+    <input type="text" v-model="taskData" class="input-text" placeholder="tambah..." />
+    <button @click="handleClick">tambah</button>
+  </div>
   <span class="subtitle">all task</span>
   <div class="item-container">
     <div v-if="data.length > 0" v-for="item in data" class="item-item" key="item.id">
-      <input @input="todoEdit" :id="item.id" type="text" v-model="item.task" class="input-text"/>
+      <input @input="taskEdit($event.target)" :id="item.id" type="text" v-model="item.task" class="input-text"/>
       <input :id="item.id" :checked="item.isDone" @input="doneTodo($event.target)" type="checkbox" v-model="item.isDone" class="input-checkbox" />
       <button @click="removeTodo(item.id)">
         <img width="36" src="https://cdn-icons-png.flaticon.com/512/3817/3817209.png" alt="" />

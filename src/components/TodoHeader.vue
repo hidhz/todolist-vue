@@ -1,11 +1,17 @@
-<template>
-
-</template>
-
-<style>
-  :root{
-    --hijau: #10b981;
-    --abu-abu: #64748b;
+<script>
+  export default {
+    props: {
+      semuaTask: Number,
+      taskSelesai: Number,
+    }
   }
-
-</style>
+</script>
+<template>
+  <header>
+    <h1>Todo App</h1>
+    <div>
+      <button>Semua <span>{{semuaTask}}</span></button>
+      <button>Selesai <span>{{taskSelesai}}</span></button>
+    </div>
+  </header>
+</template>
